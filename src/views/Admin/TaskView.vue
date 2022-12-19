@@ -6,7 +6,7 @@
     <v-card class="justify-center">
       <v-card>
         <v-card-title class="justify-center">
-          <h2>Task Management</h2>
+          <h2>Task View</h2>
         </v-card-title>
 
         <v-card-title>
@@ -19,9 +19,6 @@
           ></v-text-field>
 
           <v-spacer></v-spacer>
-          <v-btn color="success" dark @click="dialog = true">
-            Tambah Tugas
-          </v-btn>
         </v-card-title>
         <v-data-table :headers="headers" :items="tasks" :search="search">
           <template v-slot:[`item.actions`]="{ item }">
@@ -36,65 +33,33 @@
                   Detail
                 </v-btn>
               </div>
-              <v-btn small color="error" @click="deleteHandler(item)">
-                Delete
-              </v-btn>
+              <v-btn small color="success" :disabled="item.status === 'Belum dikerjakan'" @click="konfirmasiHandler(item)">
+                  Konfirmasi
+                </v-btn>
             </v-row>
           </template>
         </v-data-table>
       </v-card>
-      <v-dialog v-model="dialog" max-width="500px">
-        <v-card>
-          <v-card-title>
-            <span>Tambah Tugas</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <div class="mx-1"></div>
-                <v-text-field
-                  v-model="form.nama_tugas"
-                  label="Nama Tugas"
-                  required
-                >
-                </v-text-field>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="setForm">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
       <v-dialog v-model="dialogedit" max-width="500px">
         <v-card>
           <v-card-title>
-            <span>Update Tugas</span>
+            <span>Detail Tugas</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
-                <div class="mx-1"></div>
-                <v-text-field
-                  v-model="form.nama_tugas"
-                  label="Nama Tugas"
-                  required
-                >
-                </v-text-field>
+                <div class="mx-1 flex flex-col">
+                  <strong>Nama Tugas</strong>
+
+                  <p>{{ this.form.nama_tugas }}</p>
+                </div>
               </v-row>
-              <v-row>
-                <div class="mx-1"></div>
-                <v-text-field v-model="form.status" label="Status" disabled>
-                </v-text-field>
-              </v-row>
+              
             </v-container>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="setForm">Update</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -102,16 +67,16 @@
         <v-card>
           <v-container>
             <v-card-title>
-              <span>Delete Tugas</span>
+              <span>Konfirmasi Tugas</span>
             </v-card-title>
             <v-card-text>
-              <p>Are you sure to delete this task?</p>
+              <p>Konfirmasi Tugas?</p>
             </v-card-text>
           </v-container>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="deleteData">Delete</v-btn>
+            <v-btn color="primary" text @click="konfirmasi">Confirm</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -121,8 +86,8 @@
     </v-card>
   </v-container>
 </template>
-
-<script>
+  
+  <script>
 export default {
   name: "TaskManagement",
   data() {
@@ -142,6 +107,14 @@ export default {
           align: "start",
           sortable: true,
           value: "nama_tugas",
+        },
+        {
+          text: "Nama User",
+          value: "nama",
+        },
+        {
+          text: "Jabatan",
+          value: "jabatan",
         },
         {
           text: "Status",
@@ -171,9 +144,7 @@ export default {
       }
     },
     readData() {
-      var id_user = this.$route.query.id_user;
-      console.log(this.$route.params);
-      var url = this.$api + "/tugas/tampiltugas/" + id_user;
+      var url = this.$api + "/tugas/tugas";
       this.$http
         .get(url, {
           headers: {
@@ -212,6 +183,7 @@ export default {
           this.color = "red";
           this.snackbar = true;
           this.load = false;
+          this.tasks = [];
         });
     },
     update() {
@@ -245,8 +217,8 @@ export default {
           this.load = false;
         });
     },
-    deleteData() {
-      var url = this.$api + "/tugas/hapus/" + this.deleteId;
+    konfirmasi() {
+      var url = this.$api + "/tugas/konfirmasi/" + this.deleteId;
       this.$http
         .get(url, {
           headers: {
@@ -277,7 +249,7 @@ export default {
       this.form.status = item.status;
       this.dialogedit = true;
     },
-    deleteHandler(item) {
+    konfirmasiHandler(item) {
       this.deleteId = item.id;
       this.dialogDelete = true;
     },
@@ -313,6 +285,6 @@ export default {
   },
 };
 </script>
-
-<style>
+  
+  <style>
 </style>

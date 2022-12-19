@@ -78,6 +78,11 @@
               </v-row>
               <v-row>
                 <div class="mx-1"></div>
+                <v-text-field v-model="form.jabatan" label="Jabatan" required>
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <div class="mx-1"></div>
                 <v-text-field
                   v-model="form.email"
                   :rules="emailRules"
@@ -123,11 +128,6 @@
               </v-row>
               <v-row>
                 <div class="mx-1"></div>
-                <v-text-field v-model="form.divisi" label="Division" required>
-                </v-text-field>
-              </v-row>
-              <v-row>
-                <div class="mx-1"></div>
                 <v-select
                   v-model="form.role"
                   label="Role"
@@ -135,6 +135,11 @@
                   required
                 >
                 </v-select>
+              </v-row>
+              <v-row>
+                <div class="mx-1"></div>
+                <v-text-field v-model="form.jabatan" label="Jabatan" required>
+                </v-text-field>
               </v-row>
               <v-row>
                 <div class="mx-1"></div>
@@ -198,6 +203,10 @@ export default {
       dialog: false,
       dialogedit: false,
       dialogDelete: false,
+      emailRules: [
+        (v) => !!v || "Email kosong",
+        (v) => /.+@.+/.test(v) || "Format salah",
+      ],
       headers: [
         {
           text: "Nama",
@@ -205,6 +214,11 @@ export default {
           sortable: true,
           value: "nama",
         },
+        {
+          text: "Jabatan",
+          value: "jabatan",
+        },
+
         {
           text: "Role",
           value: "role",
@@ -221,6 +235,7 @@ export default {
         nama: null,
         no_telepon: null,
         role: null,
+        jabatan: null,
         email: null,
         password: null,
       },
@@ -252,6 +267,7 @@ export default {
       this.user.append("nama", this.form.nama);
       this.user.append("no_telepon", this.form.no_telepon);
       this.user.append("role", this.form.role);
+      this.user.append("jabatan", this.form.jabatan);
       this.user.append("email", this.form.email);
       this.user.append("password", this.form.password);
       var url = this.$api + "/user/tambah";
@@ -283,6 +299,7 @@ export default {
         nama: this.form.nama,
         no_telepon: this.form.no_telepon,
         role: this.form.role,
+        jabatan: this.form.jabatan,
         email: this.form.email,
         password: this.form.password,
       };
@@ -344,6 +361,7 @@ export default {
       this.form.nama = item.nama;
       this.form.no_telepon = item.no_telepon;
       this.form.role = item.role;
+      this.form.jabatan = item.jabatan;
       this.form.email = item.email;
       this.form.password = item.password;
       this.dialogedit = true;
@@ -362,10 +380,11 @@ export default {
       this.dialog = false;
       this.dialogedit = false;
       this.dialogDelete = false;
-      this.resetForm = {
+      this.form = {
         nama: null,
         no_telepon: null,
         role: null,
+        jabatan: null,
         email: null,
         password: null,
       };

@@ -57,6 +57,11 @@ export default {
           icon: "mdi-home",
         },
         {
+          path: "/taskview",
+          title: "Task View",
+          icon: "mdi-book",
+        },
+        {
           path: "/usermanagement",
           title: "User Management",
           icon: "mdi-account-group",
