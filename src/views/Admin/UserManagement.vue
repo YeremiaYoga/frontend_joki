@@ -3,7 +3,7 @@
     <v-card class="justify-center">
       <v-card>
         <v-card-title class="justify-center">
-          <h2>User Management</h2>
+          <h2>Kelola User</h2>
         </v-card-title>
 
         <v-card-title>
@@ -16,7 +16,9 @@
           ></v-text-field>
 
           <v-spacer></v-spacer>
-          <v-btn color="success" dark @click="dialog = true"> Add </v-btn>
+          <v-btn color="success" dark @click="dialog = true">
+            Tambah User
+          </v-btn>
         </v-card-title>
         <v-data-table :headers="headers" :items="users" :search="search">
           <template v-slot:[`item.actions`]="{ item }">
@@ -48,13 +50,13 @@
       <v-dialog v-model="dialog" max-width="1000px">
         <v-card>
           <v-card-title>
-            <span>Add User</span>
+            <span>Tambah User</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
                 <div class="mx-1"></div>
-                <v-text-field v-model="form.nama" label="Username" required>
+                <v-text-field v-model="form.nama" label="Nama" required>
                 </v-text-field>
               </v-row>
               <v-row>
@@ -101,7 +103,13 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="setForm">Save</v-btn>
+            <v-btn
+              color="primary"
+              text
+              @click="setForm"
+              :disabled="!form.email || !form.password"
+              >Tambah</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -119,11 +127,7 @@
               </v-row>
               <v-row>
                 <div class="mx-1"></div>
-                <v-text-field
-                  v-model="form.no_telepon"
-                  label="Phone Number"
-                  required
-                >
+                <v-text-field v-model="form.no_telepon" label="Phone Number">
                 </v-text-field>
               </v-row>
               <v-row>
@@ -132,7 +136,6 @@
                   v-model="form.role"
                   label="Role"
                   :items="['Admin', 'Pegawai']"
-                  required
                 >
                 </v-select>
               </v-row>
@@ -147,13 +150,12 @@
                   v-model="form.email"
                   :rules="emailRules"
                   label="Email"
-                  required
                 >
                 </v-text-field>
               </v-row>
               <v-row>
                 <div class="mx-1"></div>
-                <v-text-field v-model="form.password" label="Password" required>
+                <v-text-field v-model="form.password" label="Password">
                 </v-text-field>
               </v-row>
             </v-container>
@@ -169,16 +171,16 @@
         <v-card>
           <v-container>
             <v-card-title>
-              <span>Delete User</span>
+              <span>Hapus User</span>
             </v-card-title>
             <v-card-text>
-              <p>Are you sure to delete this user?</p>
+              <p>Yakin ingin menghapus user ini?</p>
             </v-card-text>
           </v-container>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="deleteData">Delete</v-btn>
+            <v-btn color="primary" text @click="deleteData">Hapus</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -318,7 +320,7 @@ export default {
           this.load = false;
           this.close();
           this.readData();
-          this.resetForm;
+          this.form;
           this.inputType = "Tambah";
         })
         .catch((error) => {
@@ -344,7 +346,7 @@ export default {
           this.load = false;
           this.close();
           this.readData();
-          this.resetForm;
+          this.form;
           this.inputType = "Tambah";
         })
         .catch((error) => {

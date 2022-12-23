@@ -3,22 +3,15 @@
     <div class="">
       <h1 class="text-center mt-10">Sistem Informasi Pegawai</h1>
     </div>
-    <v-carousel
-      class="mt-16"
-      cycle
-      height="500"
-      
-      hide-delimiter-background
-      show-arrows-on-hover
-    >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        <v-sheet :color="colors[i]" height="500px" widht="500px">
-          <v-row class="fill-height" align="center" justify="center">
-            <div class="text-h2">{{ slide }} Contoh Pengumuman</div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
+    <v-card class="mx-auto mt-16" max-width="1000">
+      <v-carousel hide-delimiter-background show-arrows-on-hover cycle>
+        <v-carousel-item
+          v-for="item in items"
+          :key="item.src"
+          :src="item.src"
+        ></v-carousel-item>
+      </v-carousel>
+    </v-card>
   </v-app>
 </template>
 
@@ -26,14 +19,20 @@
 export default {
   data() {
     return {
-      colors: [
-        "indigo",
-        "warning",
-        "pink darken-2",
-        "red lighten-1",
-        "deep-purple accent-4",
+      items: [
+        {
+          src: "https://media.discordapp.net/attachments/558291614850613287/1055422132177338429/tampilan_Home_5.jpg",
+        },
+        {
+          src: "https://media.discordapp.net/attachments/558291614850613287/1055422130998743070/Tampilan_Home_2.jpg",
+        },
+        {
+          src: "https://cdn.discordapp.com/attachments/558291614850613287/1055422131426558002/tampilan_Home_3.jpg",
+        },
+        {
+          src: "https://media.discordapp.net/attachments/558291614850613287/1055422131749523526/Tampilan_Home_4.jpg",
+        },
       ],
-      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
     };
   },
 };

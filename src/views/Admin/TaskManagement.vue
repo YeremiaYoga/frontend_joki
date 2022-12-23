@@ -64,7 +64,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="setForm">Save</v-btn>
+            <v-btn color="primary" text @click="setForm" :disabled="!form.nama_tugas">Tambah</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -102,16 +102,16 @@
         <v-card>
           <v-container>
             <v-card-title>
-              <span>Delete Tugas</span>
+              <span>Hapus Tugas</span>
             </v-card-title>
             <v-card-text>
-              <p>Are you sure to delete this task?</p>
+              <p>Yakin ingin menghapus tugas ini?</p>
             </v-card-text>
           </v-container>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="cancel">Cancel</v-btn>
-            <v-btn color="primary" text @click="deleteData">Delete</v-btn>
+            <v-btn color="primary" text @click="deleteData">Hapus</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -138,15 +138,21 @@ export default {
       dialogDelete: false,
       headers: [
         {
-          text: "Nama Tugas",
+          text: "Tanggal",
           align: "start",
           sortable: true,
+          value: "created_at",
+        },
+        {
+          text: "Nama Tugas",
+
           value: "nama_tugas",
         },
         {
           text: "Status",
           value: "status",
         },
+
         {
           text: "",
           value: "actions",

@@ -58,12 +58,12 @@ export default {
         },
         {
           path: "/taskview",
-          title: "Task View",
+          title: "Review Tugas",
           icon: "mdi-book",
         },
         {
           path: "/usermanagement",
-          title: "User Management",
+          title: "Kelola User",
           icon: "mdi-account-group",
         },
       ],

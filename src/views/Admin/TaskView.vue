@@ -6,7 +6,7 @@
     <v-card class="justify-center">
       <v-card>
         <v-card-title class="justify-center">
-          <h2>Task View</h2>
+          <h2>Review Tugas</h2>
         </v-card-title>
 
         <v-card-title>
@@ -70,7 +70,7 @@
               <span>Konfirmasi Tugas</span>
             </v-card-title>
             <v-card-text>
-              <p>Konfirmasi Tugas?</p>
+              <p>Konfirmasi tugas?</p>
             </v-card-text>
           </v-container>
           <v-card-actions>
@@ -103,9 +103,13 @@ export default {
       dialogDelete: false,
       headers: [
         {
-          text: "Nama Tugas",
+          text: "Tanggal",
           align: "start",
           sortable: true,
+          value: "created_at",
+        },
+        {
+          text: "Nama Tugas",
           value: "nama_tugas",
         },
         {
